@@ -5,7 +5,7 @@ public class Edge {
     private String beginningVertexName;
     private int distance;
 
-    Edge(String beginningVertexName, int distance) {
+    public Edge(String beginningVertexName, int distance) {
         setBeginningVertexName(beginningVertexName);
         setDistance(distance);
     }
@@ -15,7 +15,8 @@ public class Edge {
     }
 
     public void setBeginningVertexName(String beginningVertexName) {
-        this.beginningVertexName = beginningVertexName;
+        if (beginningVertexName != null || !beginningVertexName.equals(""))
+            this.beginningVertexName = beginningVertexName;
     }
 
     public int getDistance() {
@@ -23,7 +24,7 @@ public class Edge {
     }
 
     public void setDistance(int distance) {
-        this.distance = distance;
+        if (distance != 0) this.distance = distance;
     }
 
 

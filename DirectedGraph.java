@@ -8,14 +8,32 @@ public class DirectedGraph {
 
     private Set keys = vertexMap.keySet();
 
+    public DirectedGraph() {
+        this.vertexMap = new HashMap<String, List<Edge>>();
+        keys = this.vertexMap.keySet();
+    }
+
+
+    public Set getKeys() {
+        return keys;
+    }
+
+
+
+
     public boolean hasVertex(String vertexName) {
         return vertexMap.containsKey(vertexName);
     }
 
-    public boolean hasEdge(String vertexName1, Edge edge) {
-        if (!hasVertex(vertexName1)) return false;
-        List<Edge> edges = vertexMap.get(vertexName1);
-        return edges.contains(edge);
+    public boolean hasEdge(String endVertexName, Edge edge) {
+        if (!hasVertex(endVertexName)) return false;
+        List<Edge> edges = vertexMap.get(endVertexName);
+        for (Edge element : edges) {
+            if (element.equals(edge)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addVertex(String vertexName) {
@@ -25,15 +43,16 @@ public class DirectedGraph {
     }
 
 
-    public void addEdge(String vertexName1, String vertexName2, int distance) {
-        if (!hasVertex(vertexName1)) addVertex(vertexName1);
-        if (!hasVertex(vertexName2)) addVertex(vertexName2);
-        List<Edge> edges1 = vertexMap.get(vertexName1);
-        Edge edge = new Edge(vertexName2, distance);
-        if (!hasEdge(vertexName1, edge)) {
+    public void addEdge(String endVertexName, String begVertexName, int distance) {
+        if (!hasVertex(endVertexName)) addVertex(endVertexName);
+        if (!hasVertex(begVertexName)) addVertex(begVertexName);
+
+        List<Edge> edges1 = vertexMap.get(endVertexName);
+        Edge edge = new Edge(begVertexName, distance);
+        if (!hasEdge(endVertexName, edge)) {
             edges1.add(edge);
-            vertexMap.remove(vertexName1);
-            vertexMap.put(vertexName1, edges1);
+            vertexMap.remove(endVertexName);
+            vertexMap.put(endVertexName, edges1);
         }
         keys = vertexMap.keySet();
     }
@@ -71,6 +90,7 @@ public class DirectedGraph {
         List<Edge> list = vertexMap.get(oldVertexName);
         vertexMap.put(newVertexName, list);
         vertexMap.remove(oldVertexName);
+        keys = vertexMap.keySet();
     }
 
     public void deleteVertex(String vertexName) {
@@ -84,11 +104,12 @@ public class DirectedGraph {
                 }
             }
         }
+        keys = vertexMap.keySet();
     }
 
-    public void deleteEdge(String vertexName1, Edge edge) {
+    public void deleteEdge(String endVertexName, Edge edge) {
         for (Object key : keys) {
-            if (vertexName1.equals(key)) {
+            if (endVertexName.equals(key)) {
                 List<Edge> list = vertexMap.get(key);
                 for (Edge element : list) {
                     if (element.equals(edge)) {
@@ -98,6 +119,7 @@ public class DirectedGraph {
                 }
             }
         }
+        keys = vertexMap.keySet();
     }
 
 }
