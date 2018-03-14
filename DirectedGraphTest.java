@@ -56,13 +56,36 @@ class DirectedGraphTest {
     }
 
     @Test
-    void deleteVertex() {
+    void deleteVertex() throws Exception {
+        DirectedGraph graph = new DirectedGraph();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
 
+        graph.addEdge("B", "A", 5);
+        graph.addEdge("C", "B", 10);
+
+        graph.deleteVertex("B");
+
+        if (graph.hasVertex("B"))
+            throw new Exception("Incorrect deleteVertex() method");
     }
 
     @Test
-    void deleteEdge() {
+    void deleteEdge() throws Exception {
+        DirectedGraph graph = new DirectedGraph();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+
+        graph.addEdge("B", "A", 5);
+        graph.addEdge("C", "B", 10);
+        graph.addEdge("C", "A", 17);
+
+        graph.deleteEdge("B", new Edge("A", 5));
+
+        if (graph.hasEdge("B", new Edge("A", 5)))
+            throw new Exception("Incorrect deleteEdge() method");
 
     }
-
 }
