@@ -19,8 +19,6 @@ public class DirectedGraph {
     }
 
 
-
-
     public boolean hasVertex(String vertexName) {
         return vertexMap.containsKey(vertexName);
     }
@@ -108,19 +106,16 @@ public class DirectedGraph {
     }
 
     public void deleteEdge(String endVertexName, Edge edge) {
-        for (Object key : keys) {
-            if (endVertexName.equals(key)) {
-                List<Edge> list = vertexMap.get(key);
-                for (Edge element : list) {
-                    if (element.equals(edge)) {
-                        list.remove(element);
-                        return;
-                    }
-                }
+        String key = endVertexName;
+        List<Edge> list = vertexMap.get(key);
+        for (Edge element : list) {
+            if (element.equals(edge)) {
+                list.remove(element);
+                return;
             }
+
         }
     }
-
 }
 
 
