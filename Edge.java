@@ -24,16 +24,17 @@ public class Edge {
     }
 
     public void setDistance(int distance) {
-        if (distance != 0) this.distance = distance;
+        if (distance > 0) this.distance = distance;
     }
 
 
     public boolean equals(Edge otherEdge) {
-        if (this.beginningVertexName.equals(otherEdge.getBeginningVertexName()) &&
-                this.distance == otherEdge.getDistance()) {
-            return true;
-        } else return false;
+        return this.beginningVertexName.equals(otherEdge.getBeginningVertexName()) &&
+                this.distance == otherEdge.getDistance();
     }
 
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
