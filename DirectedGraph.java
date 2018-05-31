@@ -53,8 +53,7 @@ public class DirectedGraph {
     }
 
     public Map<String, List<Edge>> getVertexMap() {
-        Map<String, List<Edge>> copy = vertexMap;
-        return copy;
+        return new HashMap<>(vertexMap);
     }
 
     public List<Edge> adjacentEdges(String vertexName) {
@@ -64,11 +63,10 @@ public class DirectedGraph {
 
     public List<Edge> outgoingEdges(String vertexName) {
         List<Edge> result = new ArrayList<>();
-        for (Object key : keys) {
-            List<Edge> list = vertexMap.get(key);
-            for (Edge element : list) {
+        for (Map.Entry<String, List<Edge>> entry : vertexMap.entrySet()) {
+            for (Edge element : entry.getValue()) {
                 if (element.getBeginningVertexName().equals(vertexName)) {
-                    result.add(new Edge(key.toString(), element.getDistance()));
+                    result.add(new Edge(entry.getKey(), element.getDistance()));
                 }
             }
         }
@@ -76,9 +74,8 @@ public class DirectedGraph {
     }
 
     public void changeVertexName(String oldVertexName, String newVertexName) {
-        for (Object key : keys) {
-            List<Edge> list = vertexMap.get(key);
-            for (Edge edge : list) {
+        for (Map.Entry<String, List<Edge>> entry : vertexMap.entrySet()) {
+            for (Edge edge : entry.getValue()) {
                 if (edge.getBeginningVertexName().equals(oldVertexName)) {
                     edge.setBeginningVertexName(newVertexName);
                 }
@@ -91,31 +88,31 @@ public class DirectedGraph {
 
     public void deleteVertex(String vertexName) {
         vertexMap.remove(vertexName);
-        for (Object key : keys) {
-            List<Edge> list = vertexMap.get(key);
+        for (Map.Entry<String, List<Edge>> entry : vertexMap.entrySet()) {
             ArrayList<Edge> removeList = new ArrayList<>();
-            for (Edge edge : list) {
+            for (Edge edge : entry.getValue()) {
                 if (edge.getBeginningVertexName().equals(vertexName)) {
                     removeList.add(edge);
                 }
             }
             for (Edge edge : removeList) {
-                list.remove(edge);
+                entry.getValue().remove(edge);
             }
         }
     }
 
     public void deleteEdge(String endVertexName, Edge edge) {
-        String key = endVertexName;
-        List<Edge> list = vertexMap.get(key);
+        List<Edge> list = vertexMap.get(endVertexName);
         for (Edge element : list) {
             if (element.equals(edge)) {
                 list.remove(element);
                 return;
             }
-
         }
     }
 }
+
+
+
 
 

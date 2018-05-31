@@ -35,6 +35,6 @@ public class Edge {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return beginningVertexName.hashCode() * distance;
     }
 }
